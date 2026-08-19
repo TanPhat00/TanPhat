@@ -13,17 +13,46 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Fetch Weather Data
+      - name: Fetch Weather and Update README
+        env:
+          WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
         run: |
-          # Gọi API lấy thời tiết thực tế dạng rút gọn
-          WEATHER_INFO=$(curl -s "https://wttr.in")
-          UPDATED_TIME=$(date -u -d "+7 hours" "+%H:%M")
-          
-          # Tạo dòng text hiển thị thời tiết đẹp mắt
-          WEATHER_TEXT="🌤️ **Thời tiết hiện tại: $WEATHER_INFO | Cập nhật lúc: $UPDATED_TIME (ICT)**"
-          
-          # Đọc file template, thay thế thẻ tag và ghi ra file README.md
-          sed "s|<!-- WEATHER_FORECAST_NOW -->|$WEATHER_TEXT|g" README.md.template > README.md
+          python3 -c '
+          import urllib.request
+          import json
+          import os
+
+          try:
+              # Gọi API lấy dữ liệu thời tiết
+              api_key = os.environ["WEATHER_API_KEY"]
+              url = f"https://weatherapi.com{api_key}&q=Ho%20Chi%20Minh&aqi=no"
+              req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+              
+              with urllib.request.urlopen(req) as response:
+                  data = json.loads(response.read().decode())
+              
+              # Trích xuất dữ liệu
+              temp = data["current"]["temp_c"]
+              condition = data["current"]["condition"]["text"]
+              humidity = data["current"]["humidity"]
+              time_now = data["current"]["last_updated"].split(" ")[1]
+              
+              weather_str = f"🌤️ **Thời tiết Ho Chi Minh: {condition} | {temp}°C | Độ ẩm: {humidity}% | Cập nhật lúc: {time_now}**"
+              
+              # Đọc file template và ghi đè vào README.md
+              with open("README.md.template", "r", encoding="utf-8") as f:
+                  content = f.read()
+              
+              final_content = content.replace("<!-- WEATHER_FORECAST_NOW -->", weather_str)
+              
+              with open("README.md", "w", encoding="utf-8") as f:
+                  f.write(final_content)
+                  
+              print("Successfully updated README.md with weather data.")
+          except Exception as e:
+              print(f"Error occurred: {e}")
+              exit(1)
+          '
 
       - name: Commit and Push changes
         run: |
@@ -31,7 +60,7 @@ jobs:
           git config user.email github-actions@github.com
           git add README.md
           if git diff --staged --quiet; then
-            echo "No changes detected."
+            echo "No weather changes detected."
           else
             git commit -m "Update dynamic weather content"
             git push origin main
