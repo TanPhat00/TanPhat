@@ -16,7 +16,7 @@ jobs:
       - name: Generate Weather Overview
         uses: huantt/weather-forecast@v1.0.5
         with:
-          city: HoChiMinh
+          city: Saigon
           days: 1
           weather-api-key: ${{ secrets.WEATHER_API_KEY }}
           template-file: 'README.md.template'
