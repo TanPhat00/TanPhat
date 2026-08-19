@@ -2,90 +2,199 @@ name: "Refresh Weather Profile"
 
 on:
   schedule:
-    - cron: '0 * * * *' # Tự động chạy mỗi giờ một lần
-  workflow_dispatch: # Cho phép bấm nút kích hoạt thủ công bất cứ lúc nào
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   update-weather:
     permissions:
       contents: write
+
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Fetch Weather and Update Profile
         env:
           WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
+
         run: |
           python3 - <<'PY'
           import urllib.request
           import urllib.parse
           import json
           import os
+          import re
 
           try:
-              city = "Ho Chi Minh"
+              # ==============================
+              # 1. API KEY
+              # ==============================
+
               api_key = os.environ.get("WEATHER_API_KEY")
 
               if not api_key:
-                  raise Exception("WEATHER_API_KEY chưa được cấu hình trong GitHub Secrets")
+                  raise Exception(
+                      "WEATHER_API_KEY chưa được cấu hình trong GitHub Secrets"
+                  )
 
-              # Encode toàn bộ query parameters một cách an toàn
+              # ==============================
+              # 2. City
+              # ==============================
+
+              city = "Ho Chi Minh"
+
               params = urllib.parse.urlencode({
                   "key": api_key,
                   "q": city,
                   "aqi": "no"
               })
 
-              url = f"https://api.weatherapi.com/v1/current.json?{params}"
+              url = (
+                  f"https://api.weatherapi.com/v1/current.json?{params}"
+              )
 
-              print(f"Đang lấy thời tiết cho: {city}")
+              print(f"🌤️ Đang lấy thời tiết cho: {city}")
+
+              # ==============================
+              # 3. Call WeatherAPI
+              # ==============================
 
               req = urllib.request.Request(
                   url,
-                  headers={"User-Agent": "Mozilla/5.0"}
+                  headers={
+                      "User-Agent": "Mozilla/5.0"
+                  }
               )
 
-              with urllib.request.urlopen(req, timeout=30) as response:
-                  data = json.loads(response.read().decode("utf-8"))
+              with urllib.request.urlopen(
+                  req,
+                  timeout=30
+              ) as response:
 
-              # Kiểm tra lỗi từ WeatherAPI
+                  data = json.loads(
+                      response.read().decode("utf-8")
+                  )
+
+              # ==============================
+              # 4. API Error
+              # ==============================
+
               if "error" in data:
-                  raise Exception(data["error"]["message"])
+                  raise Exception(
+                      data["error"]["message"]
+                  )
 
-              # Trích xuất dữ liệu thời tiết
-              temp = data["current"]["temp_c"]
-              condition = data["current"]["condition"]["text"]
-              humidity = data["current"]["humidity"]
-              wind = data["current"]["wind_kph"]
+              # ==============================
+              # 5. Weather data
+              # ==============================
+
+              current = data["current"]
+
+              temp = current["temp_c"]
+              condition = current["condition"]["text"]
+              humidity = current["humidity"]
+              wind = current["wind_kph"]
 
               weather_str = (
                   f"🌤️ **Thời tiết hiện tại (Hồ Chí Minh):** "
                   f"{temp}°C | {condition} | "
-                  f"Độ ẩm: {humidity}% | Gió: {wind} km/h"
+                  f"Độ ẩm: {humidity}% | "
+                  f"Gió: {wind} km/h"
               )
 
-              print(f"Lấy thời tiết thành công: {weather_str}")
+              print(f"✅ {weather_str}")
 
-              # Đọc template
-              if not os.path.exists("README.md"):
-                  raise Exception("Không tìm thấy file README.md")
+              # ==============================
+              # 6. Read README.md
+              # ==============================
 
-              with open("README.md", "r", encoding="utf-8") as f:
+              readme_file = "README.md"
+
+              if not os.path.exists(readme_file):
+                  raise Exception(
+                      "Không tìm thấy file README.md"
+                  )
+
+              with open(
+                  readme_file,
+                  "r",
+                  encoding="utf-8"
+              ) as f:
                   content = f.read()
 
-              # Thay thế placeholder
-              updated_content = content.replace(
-                  "<!-- WEATHER_FORECAST_NOW -->",
-                  weather_str
+              # ==============================
+              # 7. Weather markers
+              # ==============================
+
+              start_marker = "<!-- WEATHER_FORECAST_START -->"
+              end_marker = "<!-- WEATHER_FORECAST_END -->"
+
+              if start_marker not in content:
+                  raise Exception(
+                      "Không tìm thấy WEATHER_FORECAST_START "
+                      "trong README.md"
+                  )
+
+              if end_marker not in content:
+                  raise Exception(
+                      "Không tìm thấy WEATHER_FORECAST_END "
+                      "trong README.md"
+                  )
+
+              # ==============================
+              # 8. Replace weather section
+              # ==============================
+
+              pattern = (
+                  re.escape(start_marker)
+                  + r".*?"
+                  + re.escape(end_marker)
               )
 
-              # Ghi README
-              with open("README.md", "w", encoding="utf-8") as f:
+              replacement = (
+                  f"{start_marker}\n"
+                  f"{weather_str}\n"
+                  f"{end_marker}"
+              )
+
+              updated_content = re.sub(
+                  pattern,
+                  replacement,
+                  content,
+                  flags=re.DOTALL
+              )
+
+              # ==============================
+              # 9. Write README.md
+              # ==============================
+
+              with open(
+                  readme_file,
+                  "w",
+                  encoding="utf-8"
+              ) as f:
                   f.write(updated_content)
 
-              print("Đã cập nhật file README.md thành công.")
+              print("✅ README.md đã được cập nhật.")
 
           except Exception as e:
-              print(f"Thất bại khi xử lý: {e}")
+              print(f"❌ Thất bại khi xử lý: {e}")
               exit(1)
           PY
+
+      - name: Commit and Push changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add README.md
+
+          if git diff --staged --quiet; then
+            echo "ℹ️ Không có thay đổi thời tiết."
+          else
+            git commit -m "🌤️ Update weather"
+            git push origin main
+          fi
