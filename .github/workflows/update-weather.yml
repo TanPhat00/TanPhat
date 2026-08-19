@@ -11,16 +11,19 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4 # Đã nâng cấp lên v4 chống lỗi Node.js
+      - uses: actions/checkout@v4
 
-      - name: Generate Weather Overview
-        uses: huantt/weather-forecast@v1.0.5
-        with:
-          city: Saigon
-          days: 1
-          weather-api-key: ${{ secrets.WEATHER_API_KEY }}
-          template-file: 'README.md.template'
-          out-file: 'README.md'
+      - name: Fetch Weather Data
+        run: |
+          # Gọi API lấy thời tiết thực tế dạng rút gọn
+          WEATHER_INFO=$(curl -s "https://wttr.in")
+          UPDATED_TIME=$(date -u -d "+7 hours" "+%H:%M")
+          
+          # Tạo dòng text hiển thị thời tiết đẹp mắt
+          WEATHER_TEXT="🌤️ **Thời tiết hiện tại: $WEATHER_INFO | Cập nhật lúc: $UPDATED_TIME (ICT)**"
+          
+          # Đọc file template, thay thế thẻ tag và ghi ra file README.md
+          sed "s|<!-- WEATHER_FORECAST_NOW -->|$WEATHER_TEXT|g" README.md.template > README.md
 
       - name: Commit and Push changes
         run: |
@@ -28,7 +31,7 @@ jobs:
           git config user.email github-actions@github.com
           git add README.md
           if git diff --staged --quiet; then
-            echo "No weather changes detected."
+            echo "No changes detected."
           else
             git commit -m "Update dynamic weather content"
             git push origin main
