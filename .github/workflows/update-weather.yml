@@ -103,6 +103,7 @@ jobs:
                 f"### 🌡️ {temp}°C &nbsp; | &nbsp; ☁️ {condition}\n\n"
                 f"💧 Độ ẩm: **{humidity}%** &nbsp; | &nbsp; "
                 f"💨 Gió: **{wind} km/h**"
+                f"🕐 **Cập nhật:** {localtime}"
                             )
 
               print(f"✅ {weather_str}")
