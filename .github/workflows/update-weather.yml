@@ -97,6 +97,7 @@ jobs:
               condition = current["condition"]["text"]
               humidity = current["humidity"]
               wind = current["wind_kph"]
+              localtime = data["location"]["localtime"]
 
               weather_str = (
                 f"# 🌤️ Thời tiết hiện tại — Hồ Chí Minh\n\n"
