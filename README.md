@@ -65,14 +65,33 @@
 
 <p align="center">
   <img
-    src="https://github-readme-stats.vercel.app/api?username=TanPhat00&show_icons=true&theme=dark&hide_border=true"
-    alt="GitHub Stats"
-    height="170"
+    src="https://streak-stats.demolab.com/?user=TanPhat00&theme=dark&hide_border=true&ring=42A5F5&fire=00B4FF&currStreakNum=42A5F5&sideNums=42A5F5&currStreakLabel=42A5F5&sideLabels=42A5F5&dates=8B949E"
+    alt="GitHub Streak Stats"
+    width="70%"
   />
+</p>
 
+<p align="center">
   <img
-    src="https://github-readme-stats.vercel.app/api/top-langs/?username=TanPhat00&layout=compact&theme=dark&hide_border=true"
-    alt="Top Languages"
-    height="170"
+    src="https://github-readme-activity-graph.vercel.app/graph?username=TanPhat00&bg_color=0d1117&color=42A5F5&line=42A5F5&point=ffffff&area=true&hide_border=true&custom_title=TanPhat00%27s%20Contribution%20Graph"
+    alt="GitHub Contribution Graph"
+    width="100%"
   />
+</p>
+## 📬 Contact
+
+<p align="center">
+  <a href="mailto:tencungkho567@gmail.com">
+    <img
+      src="https://img.shields.io/badge/EMAIL-FFCA28?style=for-the-badge&logo=gmail&logoColor=black"
+      alt="Email"
+    />
+  </a>
+
+  <a href="https://github.com/TanPhat00">
+    <img
+      src="https://img.shields.io/badge/GITHUB-181717?style=for-the-badge&logo=github&logoColor=white"
+      alt="GitHub"
+    />
+  </a>
 </p>
