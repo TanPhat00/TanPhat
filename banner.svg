@@ -2,8 +2,8 @@
 
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#42A5F5"/>
-      <stop offset="100%" stop-color="#42A5F5"/>
+      <stop offset="0%" stop-color="#090b0f"/>
+      <stop offset="100%" stop-color="#15171b"/>
     </linearGradient>
 
     <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
@@ -45,7 +45,7 @@
     font-family="Arial, Helvetica, sans-serif"
     font-size="28"
     font-weight="600"
-    fill="#e0a300">
+    fill="#42A5F5">
     Flutter Developer | Dart | Firebase | REST API
   </text>
 
