@@ -1,0 +1,52 @@
+<svg width="1200" height="260" viewBox="0 0 1200 260" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#090b0f"/>
+      <stop offset="100%" stop-color="#15171b"/>
+    </linearGradient>
+
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#e0a300"/>
+      <stop offset="100%" stop-color="#f0b90b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="260" fill="url(#bg)"/>
+
+  <!-- Subtle bottom shape -->
+  <path
+    d="M0 220
+       C250 190 400 245 650 215
+       C850 190 1000 205 1200 230
+       L1200 260
+       L0 260 Z"
+    fill="#0d1117"
+  />
+
+  <!-- Main title -->
+  <text
+    x="600"
+    y="125"
+    text-anchor="middle"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="82"
+    font-weight="700"
+    fill="url(#gold)">
+    TanPhat00@Flutter:~
+  </text>
+
+  <!-- Subtitle -->
+  <text
+    x="600"
+    y="175"
+    text-anchor="middle"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="28"
+    font-weight="600"
+    fill="#e0a300">
+    Flutter Developer | Dart | Firebase | REST API
+  </text>
+
+</svg>
