@@ -1,0 +1,35 @@
+name: "Refresh Weather Profile"
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Tự động chạy mỗi giờ một lần
+  workflow_dispatch: # Cho phép bấm nút kích hoạt thủ công bất cứ lúc nào
+
+jobs:
+  update-weather:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Generate Weather Overview
+        uses: huantt/weather-forecast@v1.0.5
+        with:
+          city: HoChiMinh
+          days: 1
+          weather-api-key: ${{ secrets.WEATHER_API_KEY }}
+          template-file: 'README.md.template'
+          out-file: 'README.md'
+
+      - name: Commit and Push changes
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add README.md
+          if git diff --staged --quiet; then
+            echo "No weather changes detected."
+          else
+            git commit -m "Update dynamic weather content"
+            git push origin main
+          fi
