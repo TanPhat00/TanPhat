@@ -1,5 +1,5 @@
 <!-- WEATHER_FORECAST_START -->
-🌤️ Đang cập nhật thời tiết...
+🌤️ **Thời tiết hiện tại (Hồ Chí Minh):** 30.7°C | Overcast | Độ ẩm: 58% | Gió: 22.7 km/h
 <!-- WEATHER_FORECAST_END -->
 
 ---
