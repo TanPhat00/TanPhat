@@ -67,10 +67,10 @@ jobs:
               print(f"Lấy thời tiết thành công: {weather_str}")
 
               # Đọc template
-              if not os.path.exists("README.md.template"):
-                  raise Exception("Không tìm thấy file README.md.template")
+              if not os.path.exists("README.md"):
+                  raise Exception("Không tìm thấy file README.md")
 
-              with open("README.md.template", "r", encoding="utf-8") as f:
+              with open("README.md", "r", encoding="utf-8") as f:
                   content = f.read()
 
               # Thay thế placeholder
