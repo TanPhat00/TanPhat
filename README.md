@@ -51,6 +51,16 @@
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 
+## 🚀 Projects
+
+| # | Project | Stack | Type | Highlights |
+|---|---|---|---|---|
+| **01** | 🛒 **GoVietMart** | Flutter · Dart · Firebase · REST API · Stripe · PayPal · Mapbox | E-Commerce | API Integration · Cart Sync · Payment · Deep Link |
+| **02** | 🚗 **Carsharing App** | Flutter · Dart · REST API · Firebase · Mapbox | Mobile App | Authentication · Maps · API Integration |
+| **03** | 🗺️ **BIWASE_ASM** | Flutter · Dart · Google Maps | Mobile App | Map Integration · Marker · Location |
+| **04** | 💬 **Chat_voi_toi** | Node.js | Web App | Backend · Real-time Chat |
+
+
 ## 📊 GitHub Stats
 
 <p align="center">
