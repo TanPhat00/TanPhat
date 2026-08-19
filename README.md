@@ -1,5 +1,8 @@
-<!-- WEATHER_FORECAST_NOW -->
+<!-- WEATHER_FORECAST_START -->
+🌤️ Đang cập nhật thời tiết...
+<!-- WEATHER_FORECAST_END -->
 
+---
 ---
 
 ## 👨‍💻 Về tôi
