@@ -9,6 +9,13 @@
 <!-- WEATHER_FORECAST_END -->
 
 ---
+<p align="center">
+  <img
+    src="./banner.svg"
+    alt="TanPhat00 Flutter Developer Banner"
+    width="100%"
+  />
+</p>
 ---
 
 ## 👨‍💻 Về tôi
