@@ -108,13 +108,7 @@ jobs:
                             )
 
               print(f"✅ {weather_str}")
-              <p align="center">
-                <img
-                  src="./banner.svg"
-                    alt="TanPhat00 Flutter Developer Banner"
-                    width="100%"
-                    />
-                      </p>
+              
               # ==============================
               # 6. Read README.md
               # ==============================
