@@ -11,7 +11,7 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4 # Đã nâng cấp lên v4 chống lỗi Node.js
 
       - name: Generate Weather Overview
         uses: huantt/weather-forecast@v1.0.5
