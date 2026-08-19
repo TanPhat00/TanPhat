@@ -103,7 +103,7 @@ jobs:
                 f"# 🌤️ Thời tiết hiện tại — Hồ Chí Minh\n\n"
                 f"### 🌡️ {temp}°C &nbsp; | &nbsp; ☁️ {condition}\n\n"
                 f"💧 Độ ẩm: **{humidity}%** &nbsp; | &nbsp; "
-                f"💨 Gió: **{wind} km/h**\n"
+                f"💨 Gió: **{wind} km/h**\n\n"
                 f"🕐 **Cập nhật:** {localtime}"
                             )
 
